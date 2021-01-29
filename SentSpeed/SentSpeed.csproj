@@ -57,10 +57,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\UICheckBox.xaml.cs">
+      <DependentUpon>UICheckBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\UIColor.xaml.cs">
       <DependentUpon>UIColor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="lib\Hsv.cs" />
+    <Compile Include="lib\IBintmIco.cs" />
+    <Compile Include="lib\RegistryAutorun.cs" />
     <Compile Include="Properties\Resource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -69,6 +73,10 @@
     <Compile Include="windows\Windinfo.xaml.cs">
       <DependentUpon>Windinfo.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\UICheckBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\UIColor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

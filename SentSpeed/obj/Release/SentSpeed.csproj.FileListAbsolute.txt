@@ -19,3 +19,5 @@ E:\SentSpeed-master\SentSpeed\obj\Release\SentSpeed.csproj.GenerateResource.cach
 E:\SentSpeed-master\SentSpeed\obj\Release\SentSpeed.csproj.CoreCompileInputs.cache
 E:\SentSpeed-master\SentSpeed\obj\Release\SentSpeed.exe
 E:\SentSpeed-master\SentSpeed\obj\Release\SentSpeed.pdb
+E:\SentSpeed-master\SentSpeed\obj\Release\Controls\UICheckBox.g.cs
+E:\SentSpeed-master\SentSpeed\obj\Release\Controls\UICheckBox.baml

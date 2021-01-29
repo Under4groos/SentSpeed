@@ -36,6 +36,8 @@ namespace SentSpeed
         int debug_mode = 0;
         int count_error_ = 0;
         bool isOpenPu = false;
+        bool StatusTimer = true;
+
         public bool IsClosed
         {
             get; private set;
@@ -46,17 +48,16 @@ namespace SentSpeed
         {
 
             InitializeComponent();
+
             this.Title = "";
-            this.Hide();
+            this.Hide();            
+            this.Icon = IBintmIco.ToImageSource(Properties.Resource.ico);
+
             windinfo.IsActiveWind = true;
 
             timerTick.Tick += TimerTick_Tick;
-            timerTick.Time = 1000;
-            
-            timerTick.Start();
-
+            timerTick.Time = 1000; // 1 сек
             timerTick2.Tick += TimerTick2_Tick;                     
-            timerTick2.Start();
 
             notify.Icon = Properties.Resource.ico;
             notify.Visible = true;
@@ -65,14 +66,50 @@ namespace SentSpeed
             for (int i = 0; i < network.NetworkInterfaces.Length; i++)
                 cb.Items.Add(network.NetworkInterfaces[i].Name);
             cb.SelectedIndex = 1;
+
+            TimerSet(StatusTimer);
+        }
+        public void TimerSet(bool b)
+        {
+            switch (b)
+            {
+                case true:
+                    timerTick.Start();
+                    timerTick2.Start();
+                    Grid1.Visibility = Visibility.Visible;
+                    Grid2.Visibility = Visibility.Hidden;
+                    break;
+                case false:
+
+                    timerTick.Stop();
+                    timerTick2.Stop();
+                    Grid1.Visibility = Visibility.Hidden;
+                    Grid2.Visibility = Visibility.Visible;
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void Notify_Click(object sender, EventArgs e)
         {
             if (IsClosed)
                 return;
-
-            this.Show();
+            switch (this.Visibility)
+            {
+                case Visibility.Visible:
+                    this.Hide();
+                    break;
+                case Visibility.Hidden:
+                    this.Show();
+                    break;
+                case Visibility.Collapsed:
+                    break;
+                default:
+                    this.Show();
+                    break;
+            }
+            
         }
 
         private void TimerTick2_Tick(object sender, EventArgs e)
@@ -124,18 +161,22 @@ namespace SentSpeed
             try
             {
                 network.Update();
-                string s = $"Upload:{network.GetUploadSpeed()}  Download:{network.GetDownloadSpeed()}";
+                //string s = $"Upload:{network.GetUploadSpeed()}  Download:{network.GetDownloadSpeed()}";
+                          
                 if (this.Visibility == Visibility.Visible)
                 {
-                    string s_1 = "Sent: " + network.ConvertTo(network.GetSentAndReceivedbytes().Item1, debug_mode);
-                    string s_2 = "Received: " + network.ConvertTo(network.GetSentAndReceivedbytes().Item2, debug_mode);
-                    Debug.Content = $"{s_1} {s_2}";
-                    Debug2.Content = s;
+                    //string s_1 = "Sent: " + network.ConvertTo(network.GetSentAndReceivedbytes().Item1, debug_mode);
+                    //string s_2 = "Received: " + network.ConvertTo(network.GetSentAndReceivedbytes().Item2, debug_mode);
+                    //Debug.Content = $"{s_1} {s_2}";
+
+                    Debug.Content = network.GetbytesSentAndReceived(debug_mode);
+                    Debug2.Content = network.GetUploadAndDownloadSpeed("\n");
+                    Debug3.Content = network.GetIncomingPacketsWithErrors();
                 }
-                notify.Text = $"{s}";
+                notify.Text = network.GetUploadAndDownloadSpeed();
                 if (windinfo.IsClosed == false)
                 {
-                    windinfo.SetText(s);
+                    windinfo.SetText(network.GetUploadAndDownloadSpeed(" "));
                 }
             }
             catch (Exception)
@@ -153,7 +194,8 @@ namespace SentSpeed
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.DragMove();
+            if(e.LeftButton == MouseButtonState.Pressed)
+                this.DragMove();
         }
 
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -165,9 +207,11 @@ namespace SentSpeed
         private void Debug_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             debug_mode++;
-            string s_1 = network.ConvertTo(network.GetSentAndReceivedbytes().Item1, debug_mode);
-            string s_2 = network.ConvertTo(network.GetSentAndReceivedbytes().Item2, debug_mode);
-            Debug.Content = $"Sent: {s_1} Received: {s_2}";
+            //string s_1 = network.ConvertTo(network.GetSentAndReceivedbytes().Item1, debug_mode);
+            //string s_2 = network.ConvertTo(network.GetSentAndReceivedbytes().Item2, debug_mode);
+            //Debug.Content = $"Sent: {s_1} Received: {s_2}";
+
+            Debug.Content = network.GetbytesSentAndReceived(debug_mode);
             if (debug_mode > 3)
                 debug_mode = 0;
         }
@@ -182,5 +226,15 @@ namespace SentSpeed
         {
             IsClosed = false;
         }
+
+        private void Window_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            StatusTimer = !StatusTimer;
+            TimerSet(StatusTimer);
+
+
+        }
+
+       
     }
 }

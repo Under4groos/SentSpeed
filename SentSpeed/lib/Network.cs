@@ -25,6 +25,10 @@ namespace SentSpeed.lib
         {
             get; set;
         }
+        public long IncomingPacketsWithErrors
+        {
+            get; set;
+        }
         public int IDInterfaces
         {
             set
@@ -41,7 +45,7 @@ namespace SentSpeed.lib
         public Network()
         {
             NetworkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
-            
+            Update();
         }
 
         public string ConvertTo(long l , int mode)
@@ -74,35 +78,45 @@ namespace SentSpeed.lib
                 return;
             interfaceStats = NetworkInterface.GetIPv4Statistics();
 
+            IncomingPacketsWithErrors = interfaceStats.IncomingPacketsWithErrors;
+          
             BytesSentSpeed = (int)(interfaceStats.BytesSent - BytesSent) / 1024;
             BytesReceivedSpeed = (int)(interfaceStats.BytesReceived - BytesReceived) / 1024;
 
             BytesReceived = interfaceStats.BytesReceived;
             BytesSent = interfaceStats.BytesSent;
         }
-        public string GetUploadSpeed()
+        
+        public string GetbytesSentAndReceived(int mode)
         {
-            return $" {BytesSentSpeed} kb/s";
-        }
-        public string GetbytesSentAndReceived()
-        {
-            return $"Sent: {BytesSent} Received: {BytesReceived}";
-        }
-        public (long,long) GetSentAndReceivedbytes()
-        {
-            return (BytesSent,BytesReceived);
+            return $"Отправлено: {ConvertTo(BytesSent,mode) }\nПолучено: {ConvertTo(BytesReceived,mode)}";
         }
 
+
+        public string GetIncomingPacketsWithErrors()
+        {
+            return $"Число входящих пакетов с ошибками.\n=> {IncomingPacketsWithErrors}";
+        }
+      
         public string GetDownloadSpeed()
         {
             return $" {BytesReceivedSpeed} kb/s";
         }
 
-
-        public string GetInterfaceType()
+        public string GetUploadSpeed()
         {
-            return NetworkInterface.NetworkInterfaceType.ToString()??"NULL";
+            return $"{BytesSentSpeed} kb/s";
         }
+
+        public string GetUploadAndDownloadSpeed(string s = "")
+        {
+            return $"Загрузка: {BytesSentSpeed} KB/s{s}Скачивание: {BytesReceivedSpeed} KB/s";
+        }
+
+        //public string GetInterfaceType()
+        //{
+        //    return NetworkInterface.NetworkInterfaceType.ToString()??"NULL";
+        //}
 
     }
 }
