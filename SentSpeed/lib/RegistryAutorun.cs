@@ -13,42 +13,36 @@ namespace SentSpeed.lib
     {
         public static string AppName
         {
-            get;set;
-        }
+            get; set;
+        } = "SentSpeed";
         public static string Path
         {
-            get;set;
-        }
+            get; set;
+        } = @"E:\SentSpeed-master\SentSpeed\bin\Release\SentSpeed.exe";
+        private static RegistryKey RegAutorun = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 
-        public static bool IsStartupItem()
+        public static bool isItem()
         {           
-            RegistryKey rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-            if (rkApp.GetValue(AppName) == null)                
-                return false;
-            else              
-                return true;
+            return RegAutorun.GetValue(AppName)==null?false:true;
         }
         public static bool IsAdm()
         {
             bool isElevated;
             using (WindowsIdentity identity = WindowsIdentity.GetCurrent())
-            {
-                WindowsPrincipal principal = new WindowsPrincipal(identity);
-                isElevated = principal.IsInRole(WindowsBuiltInRole.Administrator);
+            {             
+                isElevated = new WindowsPrincipal(identity).IsInRole(WindowsBuiltInRole.Administrator);
             }
             return isElevated;
         }
         public static void add()
         {
-            RegistryKey rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-            if (!IsStartupItem())               
-                rkApp.SetValue(AppName, Path);
+            if (!isItem())
+                RegAutorun.SetValue(AppName, Path);
         }
         public static void remove()
         {
-            RegistryKey rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-            if (IsStartupItem())               
-                rkApp.DeleteValue(AppName, false);
+            if (isItem())
+                RegAutorun.DeleteValue(AppName, false);
         }
     }
 }

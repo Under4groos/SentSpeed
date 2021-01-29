@@ -58,7 +58,7 @@ namespace SentSpeed.Controls
         {
             isActive = !isActive;
             setColor();
-            MessageBox.Show($"{isActive}");
+            //MessageBox.Show($"{isActive}");
         }
     }
 }

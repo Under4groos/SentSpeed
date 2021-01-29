@@ -31,7 +31,7 @@
                         </StackPanel>
                     </Grid>
                     <Controls:UIColor x:Name="ColorRGBbox" Height="25"  VerticalAlignment="Top" Margin="0,5,0,0"/>
-                    <Controls:UICheckBox Height="23" Margin="0,5,0,0"/>
+                    <Label x:Name="AutorunCh" Content="Autorun" Margin="0,5,0,0" Height="25" Background="Red" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" Padding="5,0" FontWeight="Bold" Foreground="White" MouseDown="AutorunCh_MouseDown"></Label>
 
                 </StackPanel>
                 <!--<StackPanel Visibility="Hidden" Grid.Column="2" VerticalAlignment="Bottom" Background="#7F575757" >

@@ -42,7 +42,10 @@ namespace SentSpeed
         {
             get; private set;
         }
-
+        bool isActive_autorun
+        {
+            get; set;
+        } = false;
 
         public MainWindow()
         {
@@ -235,6 +238,27 @@ namespace SentSpeed
 
         }
 
-       
+        private void AutorunCh_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (RegistryAutorun.IsAdm() == false && e.LeftButton != MouseButtonState.Pressed)
+                return;
+         
+            isActive_autorun = !isActive_autorun;
+
+            switch (isActive_autorun)
+            {
+                case true:
+                    AutorunCh.Background = System.Windows.Media.Brushes.Green;
+                    RegistryAutorun.add();
+                    break;
+                case false:
+                    AutorunCh.Background = System.Windows.Media.Brushes.Red;
+                    RegistryAutorun.remove();
+                    break;
+                default:
+                    break;
+            }
+            AutorunCh.Content = $"{isActive_autorun}";
+        }
     }
 }
