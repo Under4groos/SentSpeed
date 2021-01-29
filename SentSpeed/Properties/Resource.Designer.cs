@@ -63,9 +63,9 @@ namespace SentSpeed.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
         /// </summary>
-        internal static System.Drawing.Icon ico_wind {
+        internal static System.Drawing.Icon ico {
             get {
-                object obj = ResourceManager.GetObject("ico_wind", resourceCulture);
+                object obj = ResourceManager.GetObject("ico", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }

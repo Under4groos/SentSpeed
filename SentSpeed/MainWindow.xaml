@@ -6,7 +6,12 @@
         xmlns:local="clr-namespace:SentSpeed"
         xmlns:Controls="clr-namespace:SentSpeed.Controls" x:Class="SentSpeed.MainWindow"
         mc:Ignorable="d" WindowStyle="None"  AllowsTransparency="True" WindowStartupLocation="CenterScreen"
-        Title="MainWindow" Height="210" Width="570" MouseLeftButtonDown="Window_MouseLeftButtonDown" Background="#FF1E1E1E">
+        Title="MainWindow" Height="210" Width="570" 
+        MouseLeftButtonDown="Window_MouseLeftButtonDown" 
+        IsVisibleChanged ="Window_IsVisibleChanged"
+        Background="#FF1E1E1E" Closed="Window_Closed"
+    
+    >
     <Border BorderBrush="#FF7400FF" BorderThickness="1">
         <Grid>
             <Grid.ColumnDefinitions>

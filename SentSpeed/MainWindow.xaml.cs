@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Diagnostics;
 
 namespace SentSpeed
 {
@@ -35,6 +36,10 @@ namespace SentSpeed
         int debug_mode = 0;
         int count_error_ = 0;
         bool isOpenPu = false;
+        public bool IsClosed
+        {
+            get; private set;
+        }
 
 
         public MainWindow()
@@ -53,7 +58,7 @@ namespace SentSpeed
             timerTick2.Tick += TimerTick2_Tick;                     
             timerTick2.Start();
 
-            notify.Icon = Properties.Resource.ico_wind;
+            notify.Icon = Properties.Resource.ico;
             notify.Visible = true;
             notify.Click += Notify_Click;
 
@@ -64,6 +69,9 @@ namespace SentSpeed
 
         private void Notify_Click(object sender, EventArgs e)
         {
+            if (IsClosed)
+                return;
+
             this.Show();
         }
 
@@ -71,6 +79,7 @@ namespace SentSpeed
         {
             try
             {
+                
                 isOpenPu = ColorUnderCursor.Is(ColorUnderCursor.Get(2, 1075), ColorRGBbox.ColorRGB) && ColorUnderCursor.Is(ColorUnderCursor.Get(2, 853), ColorRGBbox.ColorRGB);
                 
                 
@@ -124,7 +133,7 @@ namespace SentSpeed
                     Debug2.Content = s;
                 }
                 notify.Text = $"{s}";
-                if (windinfo.Visibility == Visibility.Visible)
+                if (windinfo.IsClosed == false)
                 {
                     windinfo.SetText(s);
                 }
@@ -161,6 +170,17 @@ namespace SentSpeed
             Debug.Content = $"Sent: {s_1} Received: {s_2}";
             if (debug_mode > 3)
                 debug_mode = 0;
+        }
+
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Process.GetCurrentProcess().Kill();
+        }
+
+        private void Window_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            IsClosed = false;
         }
     }
 }
