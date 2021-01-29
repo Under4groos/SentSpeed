@@ -21,4 +21,3 @@ E:\SentSpeed-master\SentSpeed\obj\Release\SentSpeed.exe
 E:\SentSpeed-master\SentSpeed\obj\Release\SentSpeed.pdb
 E:\SentSpeed-master\SentSpeed\obj\Release\Controls\UICheckBox.g.cs
 E:\SentSpeed-master\SentSpeed\obj\Release\Controls\UICheckBox.baml
-E:\SentSpeed-master\SentSpeed\obj\Release\SentSpeed.csprojAssemblyReference.cache

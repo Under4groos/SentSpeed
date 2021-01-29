@@ -1,30 +1,35 @@
 ﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace SentSpeed.lib
 {
     public static class RegistryAutorun
     {
+        /// <summary>
+        /// Имя в реестре 
+        /// </summary>
         public static string AppName
         {
             get; set;
         } = "SentSpeed";
+
+        /// <summary>
+        /// Путь к нашему EXE - ку. 
+        /// </summary>
         public static string Path
         {
             get; set;
-        } = @"E:\SentSpeed-master\SentSpeed\bin\Release\SentSpeed.exe";
+        } = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
         private static RegistryKey RegAutorun = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 
         public static bool isItem()
         {           
             return RegAutorun.GetValue(AppName)==null?false:true;
         }
+        /// <summary>
+        /// Проверка на запуск от им. Адм
+        /// </summary>
+        /// <returns></returns>
         public static bool IsAdm()
         {
             bool isElevated;

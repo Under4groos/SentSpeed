@@ -71,6 +71,14 @@ namespace SentSpeed
             cb.SelectedIndex = 1;
 
             TimerSet(StatusTimer);
+            //if (RegistryAutorun.IsAdm())
+            if (RegistryAutorun.isItem())
+            {
+                isActive_autorun = true;
+                setStatusAutorun();
+            }
+
+
         }
         public void TimerSet(bool b)
         {
@@ -219,6 +227,7 @@ namespace SentSpeed
                 debug_mode = 0;
         }
 
+       
 
         private void Window_Closed(object sender, EventArgs e)
         {
@@ -234,17 +243,16 @@ namespace SentSpeed
         {
             StatusTimer = !StatusTimer;
             TimerSet(StatusTimer);
-
-
         }
 
         private void AutorunCh_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (RegistryAutorun.IsAdm() == false && e.LeftButton != MouseButtonState.Pressed)
-                return;
-         
             isActive_autorun = !isActive_autorun;
+            setStatusAutorun();
+        }
 
+        public void setStatusAutorun()
+        {
             switch (isActive_autorun)
             {
                 case true:
@@ -258,7 +266,14 @@ namespace SentSpeed
                 default:
                     break;
             }
-            AutorunCh.Content = $"{isActive_autorun}";
+            AutorunCh.Content = $"Autorun: {isActive_autorun}";
+        }
+
+        private void Label_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton != MouseButtonState.Pressed)
+                return;
+            Process.GetCurrentProcess().Kill();
         }
     }
 }
