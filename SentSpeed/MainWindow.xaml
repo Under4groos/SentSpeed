@@ -1,0 +1,43 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SentSpeed"
+        xmlns:Controls="clr-namespace:SentSpeed.Controls" x:Class="SentSpeed.MainWindow"
+        mc:Ignorable="d" WindowStyle="None"  AllowsTransparency="True" WindowStartupLocation="CenterScreen"
+        Title="MainWindow" Height="210" Width="570" MouseLeftButtonDown="Window_MouseLeftButtonDown" Background="#FF1E1E1E">
+    <Border BorderBrush="#FF7400FF" BorderThickness="1">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="9*"/>
+                <ColumnDefinition Width="220*"/>
+                <ColumnDefinition Width="339*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="1">
+                <Grid Background="#FF575757" VerticalAlignment="Top" Margin="0,5,0,0">
+                    <Label Content="interface" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Margin="-1,-1,0,0"/>
+                    <ComboBox x:Name="cb"  SelectionChanged="cb_SelectionChanged" VerticalAlignment="Top" Margin="0,24,0,0"/>
+                </Grid>
+                <Grid Background="#FF575757" VerticalAlignment="Top" Margin="0,5,0,0">
+                    <StackPanel>
+                        <CheckBox x:Name="CBTopMost" Content="TopMost" IsChecked="True"  VerticalAlignment="Top" Background="White" BorderBrush="White" Foreground="White"/>
+                    </StackPanel>
+                </Grid>
+                <Controls:UIColor x:Name="ColorRGBbox" Height="25"  VerticalAlignment="Top" Margin="0,5,0,0"/>
+
+            </StackPanel>
+            <StackPanel Grid.Column="2" VerticalAlignment="Bottom" Background="#7F575757">
+                <Label x:Name="Debug" Content="" VerticalAlignment="Bottom" Foreground="White"  MouseLeftButtonDown="Debug_MouseLeftButtonDown"/>
+                <Label x:Name="Debug2" Content="" VerticalAlignment="Bottom" Foreground="White"  MouseLeftButtonDown="Debug_MouseLeftButtonDown"/>
+
+            </StackPanel>
+           
+
+            <Border VerticalAlignment="Bottom"  Height="24" Width="100"  HorizontalAlignment="Left" Background="#FF575757" Margin="5,0,0,0" MouseLeftButtonDown="Border_MouseLeftButtonDown" Grid.Column="1">
+                <Label Content="Hide" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" FontSize="16" Padding="0" Margin="0,-2,0,2"/>
+            </Border>
+            <Label x:Name="Cerr" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,4,4,0" Foreground="White"/>
+        </Grid>
+    </Border>
+</Window>
