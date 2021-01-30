@@ -18,6 +18,7 @@ using System.Windows.Shapes;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Diagnostics;
+using System.Threading;
 
 namespace SentSpeed
 {
@@ -52,6 +53,7 @@ namespace SentSpeed
 
             InitializeComponent();
 
+
             this.Title = "";
             this.Hide();            
             this.Icon = IBintmIco.ToImageSource(Properties.Resource.ico);
@@ -60,7 +62,9 @@ namespace SentSpeed
 
             timerTick.Tick += TimerTick_Tick;
             timerTick.Time = 1000; // 1 сек
-            timerTick2.Tick += TimerTick2_Tick;                     
+
+            timerTick2.Tick += TimerTick2_Tick;
+            timerTick2.Time = 300; // 1 сек
 
             notify.Icon = Properties.Resource.ico;
             notify.Visible = true;
@@ -101,26 +105,25 @@ namespace SentSpeed
                     break;
             }
         }
-
-        private void Notify_Click(object sender, EventArgs e)
+        private void Vis()
         {
             if (IsClosed)
                 return;
             switch (this.Visibility)
             {
                 case Visibility.Visible:
-                    this.Hide();
+                    //this.Hide();
+                    this.Visibility = Visibility.Hidden;
                     break;
                 case Visibility.Hidden:
-                    this.Show();
-                    break;
-                case Visibility.Collapsed:
-                    break;
-                default:
-                    this.Show();
+                    //this.Show();
+                    this.Visibility = Visibility.Visible;
                     break;
             }
-            
+        }
+        private void Notify_Click(object sender, EventArgs e)
+        {
+            Vis();
         }
 
         private void TimerTick2_Tick(object sender, EventArgs e)
@@ -140,14 +143,22 @@ namespace SentSpeed
                         (int)(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width - windinfo.Width),
                         (int)(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height - (size_h + windinfo.Height))
                         );
-
-                    windinfo.Show();
-                    windinfo.isVis = true;
+                    if (windinfo.isVis == false)
+                    {
+                        windinfo.Show();
+                        windinfo.isVis = true;
+                    }
+                    
                 }
                 else
                 {
-                    windinfo.Hide();
-                    windinfo.isVis = false;
+                    if (windinfo.isVis == true)
+                    {
+                        windinfo.Hide();
+                        windinfo.isVis = false;
+
+                    }
+                    
                 }
                 if (windinfo.IsActiveWind)
                     windinfo.Topmost = (bool)CBTopMost.IsChecked;
@@ -173,7 +184,7 @@ namespace SentSpeed
             {
                 network.Update();
                 //string s = $"Upload:{network.GetUploadSpeed()}  Download:{network.GetDownloadSpeed()}";
-                          
+
                 if (this.Visibility == Visibility.Visible)
                 {
                     //string s_1 = "Sent: " + network.ConvertTo(network.GetSentAndReceivedbytes().Item1, debug_mode);
@@ -211,7 +222,7 @@ namespace SentSpeed
 
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.Hide();
+            this.Visibility = Visibility.Hidden;
             
         }
 
@@ -231,7 +242,9 @@ namespace SentSpeed
 
         private void Window_Closed(object sender, EventArgs e)
         {
+            TimerSet(false);
             Process.GetCurrentProcess().Kill();
+            
         }
 
         private void Window_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)

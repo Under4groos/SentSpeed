@@ -17,11 +17,11 @@ namespace SentSpeed.lib
         long BytesReceived = 0;
 
         int id = 0;
-        public int BytesSentSpeed
+        public long BytesSentSpeed
         {
             get;set;
         }
-        public int BytesReceivedSpeed
+        public long BytesReceivedSpeed
         {
             get; set;
         }
@@ -44,7 +44,7 @@ namespace SentSpeed.lib
 
         public Network()
         {
-            NetworkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
+            NetworkInterfaces = NetworkInterfaces??NetworkInterface.GetAllNetworkInterfaces();
             Update();
         }
 
@@ -80,8 +80,8 @@ namespace SentSpeed.lib
 
             IncomingPacketsWithErrors = interfaceStats.IncomingPacketsWithErrors;
           
-            BytesSentSpeed = (int)(interfaceStats.BytesSent - BytesSent) / 1024;
-            BytesReceivedSpeed = (int)(interfaceStats.BytesReceived - BytesReceived) / 1024;
+            BytesSentSpeed = (interfaceStats.BytesSent - BytesSent) / 1024;
+            BytesReceivedSpeed = (interfaceStats.BytesReceived - BytesReceived) / 1024;
 
             BytesReceived = interfaceStats.BytesReceived;
             BytesSent = interfaceStats.BytesSent;

@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-G:\С#\SentSpeed\SentSpeed\obj\Debug\
+E:\SentSpeed-master\SentSpeed\obj\Debug\
 SentSpeed
 none
 false
 DEBUG;TRACE
-G:\С#\SentSpeed\SentSpeed\App.xaml
-471562503
+E:\SentSpeed-master\SentSpeed\App.xaml
+51574127685
 
-121512580907
-16-1030733194
-Controls\UIColor.xaml;MainWindow.xaml;style\Dictionary.xaml;windows\Windinfo.xaml;
+14-365042233
+15-1358686748
+Controls\UICheckBox.xaml;Controls\UIColor.xaml;MainWindow.xaml;style\Dictionary.xaml;windows\Windinfo.xaml;
 
 False
 
